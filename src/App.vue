@@ -346,6 +346,10 @@ body {
     position: relative;
     height: 100%;
     min-width: 452px;
+    @media (max-width:480px) {
+      width: 100%;
+      min-width: 100%;
+    }
   }
   &-item {
     position: absolute;
@@ -363,6 +367,11 @@ body {
         top: 40px;
         transform: translateY(0);
       }
+      @media (max-width:480px) {
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
       > div {
         top: 50%;
         transform: translateY(-50%);
@@ -379,7 +388,6 @@ body {
       padding: 51px 48px 48px 48px;
       border-radius: 10px;
       background-color: white;
-      overflow: hidden;
       box-sizing: border-box;
       box-shadow: 0px 20px 40px rgba(47, 47, 47, 0.2);
       transition: all .5s ease;
@@ -425,6 +433,7 @@ body {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+          background-color: transparent;
         }
       }
     }
