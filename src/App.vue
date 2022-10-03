@@ -346,6 +346,10 @@ body {
     position: relative;
     height: 100%;
     min-width: 452px;
+    @media (max-width:480px) {
+      width: 100%;
+      min-width: 100%;
+    }
   }
   &-item {
     position: absolute;
@@ -362,6 +366,11 @@ body {
       @media (max-width:992px) {
         top: 40px;
         transform: translateY(0);
+      }
+      @media (max-width:480px) {
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%, 0);
       }
       > div {
         top: 50%;
