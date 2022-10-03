@@ -388,7 +388,6 @@ body {
       padding: 51px 48px 48px 48px;
       border-radius: 10px;
       background-color: white;
-      overflow: hidden;
       box-sizing: border-box;
       box-shadow: 0px 20px 40px rgba(47, 47, 47, 0.2);
       transition: all .5s ease;
