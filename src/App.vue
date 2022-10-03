@@ -19,8 +19,10 @@
     </div>
   </div>
   <div class="description column">
-    <svg width="720" height="834" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 834"><path d="M0 76.059.001 0H720v373.891c0 50.414-29.147 96.282-74.788 117.693l-136.777 64.165c-33.049 15.503-36.38 61.207-5.928 81.338l173.175 114.487A98.81 98.81 0 0 1 720 834H.001V537.003a185.054 185.054 0 0 1 59.255-135.717l170.033-157.605c15.68-14.534 8.518-40.703-12.378-45.226L73.733 167.461C30.705 158.147 0 120.084 0 76.059Z" fill="#5A58CF"/></svg>
+    <svg class="display-desk" width="720" height="834" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 834"><path d="M0 76.059.001 0H720v373.891c0 50.414-29.147 96.282-74.788 117.693l-136.777 64.165c-33.049 15.503-36.38 61.207-5.928 81.338l173.175 114.487A98.81 98.81 0 0 1 720 834H.001V537.003a185.054 185.054 0 0 1 59.255-135.717l170.033-157.605c15.68-14.534 8.518-40.703-12.378-45.226L73.733 167.461C30.705 158.147 0 120.084 0 76.059Z" :fill="activeColor"/></svg>
+    <svg class="display-mob" width="375" height="508" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 508"><path d="M356.4 0H375v508H246.203c-46.242 0-87.887-27.98-105.364-70.791-12.876-31.538-56.392-34.469-73.38-4.942l-31.658 55.027A41.303 41.303 0 0 1 0 508V0h145.362a80 80 0 0 1 44.81 13.728l65.971 44.606c12.51 8.458 29.639 2.747 34.569-11.527C300.388 18.794 326.764 0 356.4.001Z" :fill="activeColor"/></svg>
     <div class="description__wrapper">
+<!--      <div @mousewheel.prevent="rotateTheWheel" class="description__inner">-->
       <div class="description__inner">
         <div
           v-for="(description, index) in descriptions"
@@ -57,16 +59,14 @@
 </template>
 
 <script>
-/*import HelloWorld from "./components/HelloWorld.vue'*/
 
 export default {
   name: 'App',
-  components: {
-    /*HelloWorld*/
-  },
+  components: {},
   data() {
     return {
-      activeIndex: 1,
+      activeId: 1,
+      activeColor: '#5A58CF',
       program: {
         title: 'The Found Program',
         text: 'There’s no one-and-done solution when it comes to sustainable weight care. With Found, five key factors come together on your journey to reach your goals',
@@ -81,6 +81,7 @@ export default {
       descriptions: [
         {
           id: 1,
+          color: '#5A58CF',
           img: 'icon-cont-plus',
           title: 'Board-certified doctors',
           items: [
@@ -94,6 +95,7 @@ export default {
         },
         {
           id: 2,
+          color: '#408BFC',
           img: 'icon-cont-shoe',
           title: 'Personal health coach',
           items: [
@@ -107,6 +109,7 @@ export default {
         },
         {
           id: 3,
+          color: '#4F6258',
           img: 'icon-cont-tel',
           title: 'Found mobile app',
           items: [
@@ -120,6 +123,7 @@ export default {
         },
         {
           id: 4,
+          color: '#F9D270',
           img: 'icon-cont-pill',
           title: 'Prescription medication',
           titleSecond: 'Our medical team provides access to the widest set of prescriptions on the market, including (but not limited to):',
@@ -134,6 +138,7 @@ export default {
         },
         {
           id: 5,
+          color: '#F9D270',
           img: 'icon-cont-heart',
           title: 'Board-certified doctors',
           items: [
@@ -146,8 +151,10 @@ export default {
           active: false
         },
       ]
-
     }
+  },
+  updated() {
+    this.activeBg()
   },
   methods : {
     showId(item){
@@ -166,12 +173,39 @@ export default {
         }
       })
     },
-    handleScroll(e) {
-      console.log(e);
-    },
-    created() {
-      window.addEventListener("scroll", this.handleScroll);
+    activeBg() {
+      this.descriptions.map(task => {
+        if (task.active) {
+          return this.activeColor = task.color;
+        }
+      });
     }
+    /*deactivatePrev(id) {
+      console.log("Deactivated " + id)
+      this.descriptions.map(task => {
+        if (task.id === id) {
+          return task.active = !task.active;
+        }
+      })
+    },*/
+    /*activateNext(id) {
+      this.descriptions.map(task => {
+        console.log("Activated " + id)
+        if (task.id === id) {
+          return task.active = !task.active;
+        }
+      })
+    },*/
+    /*rotateTheWheel() {
+      this.descriptions.map(task => {
+        if (task.active === true) {
+          this.activeId = task.id
+          this.deactivatePrev(this.activeId)
+          this.activeId = this.activeId + 1
+          this.activateNext(this.activeId)
+        }
+      })
+    },*/
   }
 }
 </script>
@@ -190,6 +224,9 @@ body {
   color: #10100E;
   display: flex;
   min-height: 100vh;
+  @media (max-width:992px) {
+    flex-wrap: wrap;
+  }
 }
 .h1 {
   font-weight: 700;
@@ -197,12 +234,18 @@ body {
   line-height: 100%;
   letter-spacing: -0.02em;
   margin: 0;
+  @media (max-width:992px) {
+    font-size: 50px;
+  }
 }
 .h2 {
   font-weight: 700;
   font-size: 28px;
   line-height: 1.46;
   margin: 0;
+  @media (max-width:992px) {
+    font-size: 22px;
+  }
 }
 .h4 {
   font-size: 18px;
@@ -210,6 +253,9 @@ body {
 }
 .column {
   width: 50%;
+  @media (max-width:992px) {
+    width: 100%;
+  }
 }
 .program {
   display: flex;
@@ -217,10 +263,13 @@ body {
   align-items: center;
   &__inner {
     width: 100%;
-    max-width: 580px;
+    max-width: 620px;
+    box-sizing: border-box;
+    padding: 20px;
   }
   p {
     font-family: 'Roboto Serif', serif;
+    font-size: 20px;
   }
   &__list {
     display: flex;
@@ -237,6 +286,10 @@ body {
       background-color: #F6F6F6;
       border-radius: 100px;
       opacity: .7;
+      @media (max-width:992px) {
+        font-size: 16px;
+        padding: 8px 15px 8px 8px;
+      }
       &:not(.active) {
         cursor: pointer;
         &:hover {
@@ -266,6 +319,9 @@ body {
 .description {
   position: relative;
   overflow: hidden;
+  @media (max-width:992px) {
+    height: 680px;
+  }
   > svg {
     position: absolute;
     top: 0;
@@ -303,10 +359,18 @@ body {
       top: 50%;
       transform: translateY(-50%);
       transition: all .5s ease;
+      @media (max-width:992px) {
+        top: 40px;
+        transform: translateY(0);
+      }
       > div {
         top: 50%;
         transform: translateY(-50%);
         transition: all .5s ease;
+        @media (max-width:992px) {
+          top: 0;
+          transform: translateY(0);
+        }
       }
     }
     > div {
@@ -319,6 +383,9 @@ body {
       box-sizing: border-box;
       box-shadow: 0px 20px 40px rgba(47, 47, 47, 0.2);
       transition: all .5s ease;
+      @media (max-width:992px) {
+        padding: 32px 24px 24px 24px;
+      }
     }
     .title {
       padding-left: 43px;
@@ -339,6 +406,10 @@ body {
         padding: 8px 0 8px 33px;
         font-size: 18px;
         line-height: 1.44;
+        @media (max-width:992px) {
+          font-size: 18px;
+          padding: 6px 0 6px 33px;
+        }
         span {
           display: inline-block;
           width: 16px;
@@ -379,7 +450,22 @@ body {
       margin-bottom: 0;
       font-size: 16px;
       text-align: center;
+      @media (max-width:992px) {
+        font-size: 14px;
+      }
     }
+  }
+}
+.display-desk {
+  display: block;
+  @media (max-width:992px) {
+    display: none;
+  }
+}
+.display-mob {
+  display: none;
+  @media (max-width:992px) {
+    display: block;
   }
 }
 </style>
